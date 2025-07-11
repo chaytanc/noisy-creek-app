@@ -14,7 +14,6 @@ class Event(models.Model):
     def __str__(self):
         return self.title
 
-    # TODO not sure what this does
     class Meta:
         ordering = ['-start_date']  # Order events by start date, newest first
         verbose_name_plural = "Events"
