@@ -1,8 +1,8 @@
 'use client';
 
 import { useRouter, usePathname } from 'next/navigation';
-import { useState } from 'react';
-import { Filter, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Filter, X, Search } from 'lucide-react';
 
 interface FilterBarProps {
   currentParams: {
@@ -18,26 +18,57 @@ export default function FilterBar({ currentParams }: FilterBarProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [isExpanded, setIsExpanded] = useState(false);
+  
+  // Local state for form inputs
+  const [formData, setFormData] = useState({
+    category: currentParams.category || '',
+    start_date: currentParams.start_date || '',
+    end_date: currentParams.end_date || '',
+    upcoming: currentParams.upcoming === 'true'
+  });
 
-  const updateFilter = (key: string, value: string) => {
+  // Sync form data with URL params when they change
+  useEffect(() => {
+    setFormData({
+      category: currentParams.category || '',
+      start_date: currentParams.start_date || '',
+      end_date: currentParams.end_date || '',
+      upcoming: currentParams.upcoming === 'true'
+    });
+  }, [currentParams]);
+
+  const updateFormData = (key: string, value: string | boolean) => {
+    setFormData(prev => ({
+      ...prev,
+      [key]: value
+    }));
+  };
+
+  const applyFilters = () => {
     const params = new URLSearchParams();
     
-    // Keep existing params except the one being updated
-    Object.entries(currentParams).forEach(([k, v]) => {
-      if (k !== key && k !== 'page' && v) {
-        params.append(k, v);
+    // Add all non-empty values to params
+    Object.entries(formData).forEach(([key, value]) => {
+      if (key === 'upcoming') {
+        if (value) {
+          params.append(key, 'true');
+        }
+      } else {
+        params.append(key, value as string);
       }
     });
-    
-    // Add new value if it's not empty
-    if (value) {
-      params.append(key, value);
-    }
     
     router.push(`${pathname}?${params.toString()}`);
   };
 
+
   const clearFilters = () => {
+    setFormData({
+      category: '',
+      start_date: '',
+      end_date: '',
+      upcoming: false
+    });
     router.push(pathname);
   };
 
@@ -68,15 +99,15 @@ export default function FilterBar({ currentParams }: FilterBarProps) {
               Category
             </label>
             <select
-              value={currentParams.category || ''}
-              onChange={(e) => updateFilter('category', e.target.value)}
+              value={formData.category}
+              onChange={(e) => updateFormData('category', e.target.value)}
               className="w-full bg-green-700 text-white rounded px-3 py-2 border-2 border-green-600 focus:border-yellow-300 focus:outline-none"
             >
               <option value="">All Categories</option>
               <option value="music">Music</option>
               <option value="food">Food & Drink</option>
               <option value="outdoor">Outdoor</option>
-              <option value="art">Art & Culture</option>
+              <option value="art & culture">Art & Culture</option>
               <option value="sports">Sports</option>
               <option value="community">Community</option>
             </select>
@@ -89,8 +120,8 @@ export default function FilterBar({ currentParams }: FilterBarProps) {
             </label>
             <input
               type="date"
-              value={currentParams.start_date || ''}
-              onChange={(e) => updateFilter('start_date', e.target.value)}
+              value={formData.start_date}
+              onChange={(e) => updateFormData('start_date', e.target.value)}
               className="w-full bg-green-700 text-white rounded px-3 py-2 border-2 border-green-600 focus:border-yellow-300 focus:outline-none"
             />
           </div>
@@ -102,8 +133,8 @@ export default function FilterBar({ currentParams }: FilterBarProps) {
             </label>
             <input
               type="date"
-              value={currentParams.end_date || ''}
-              onChange={(e) => updateFilter('end_date', e.target.value)}
+              value={formData.end_date}
+              onChange={(e) => updateFormData('end_date', e.target.value)}
               className="w-full bg-green-700 text-white rounded px-3 py-2 border-2 border-green-600 focus:border-yellow-300 focus:outline-none"
             />
           </div>
@@ -116,8 +147,8 @@ export default function FilterBar({ currentParams }: FilterBarProps) {
             <label className="flex items-center gap-2">
               <input
                 type="checkbox"
-                checked={currentParams.upcoming === 'true'}
-                onChange={(e) => updateFilter('upcoming', e.target.checked ? 'true' : '')}
+                checked={formData.upcoming}
+                onChange={(e) => updateFormData('upcoming', e.target.checked)}
                 className="w-4 h-4 text-yellow-300 bg-green-700 border-green-600 rounded focus:ring-yellow-300"
               />
               <span className="text-white text-sm">Upcoming Events</span>
@@ -125,17 +156,25 @@ export default function FilterBar({ currentParams }: FilterBarProps) {
           </div>
         </div>
         
-        {/* Clear Filters Button */}
-        {hasActiveFilters && (
-          <div className="flex justify-end">
+        {/* Action Buttons */}
+        <div className="flex justify-between items-center gap-4">
+          <button
+            onClick={applyFilters}
+            className="bg-yellow-500 hover:bg-yellow-600 text-green-900 px-6 py-2 rounded font-semibold transition-colors flex items-center gap-2"
+          >
+            <Search className="w-4 h-4" />
+            Search Events
+          </button>
+          
+          {hasActiveFilters && (
             <button
               onClick={clearFilters}
               className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-semibold transition-colors"
             >
               Clear All Filters
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { Calendar, Mountain, Trees } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Header() {
   return (
@@ -8,11 +8,13 @@ export default function Header() {
           {/* Logo Section */}
           <div className="flex items-center gap-4">
             <div className="relative">
-              <div className="flex items-center gap-2">
-                <Mountain className="w-8 h-8 text-purple-400" />
-                <Calendar className="w-8 h-8 text-yellow-300 bg-white rounded p-1" />
-                <Trees className="w-8 h-8 text-green-400" />
-              </div>
+              <Image
+                src="/pnwevents.png"
+                alt="Pacific Northwest Events Logo"
+                width={100}
+                height={100}
+                className="rounded-lg"
+              />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-yellow-300 pixel-text">
@@ -27,12 +29,12 @@ export default function Header() {
             <a href="/events" className="text-white hover:text-yellow-300 font-semibold transition-colors">
               Events
             </a>
-            <a href="/categories" className="text-white hover:text-yellow-300 font-semibold transition-colors">
+            {/* <a href="/categories" className="text-white hover:text-yellow-300 font-semibold transition-colors">
               Categories
             </a>
             <a href="/venues" className="text-white hover:text-yellow-300 font-semibold transition-colors">
               Venues
-            </a>
+            </a> */}
           </nav>
           
           {/* Mobile Menu Button */}

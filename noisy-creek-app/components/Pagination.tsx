@@ -20,7 +20,7 @@ export default function Pagination({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const pageSize = 10; // Should match your Django pagination
+  const pageSize = 9; // Should match your Django pagination
   const totalPages = Math.ceil(totalResults / pageSize);
 
   const updatePage = (page: number) => {
