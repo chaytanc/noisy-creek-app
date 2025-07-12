@@ -48,7 +48,7 @@ export default class ErrorBoundary extends React.Component<
             {process.env.NODE_ENV === 'development' && (
               <details className="mt-4">
                 <summary className="text-yellow-300 cursor-pointer">
-                  Error Details
+                  Error Details (only available if process env NODE_ENV: {process.env.NODE_ENV})
                 </summary>
                 <pre className="text-xs text-white mt-2 overflow-auto">
                   {this.state.error?.stack}
