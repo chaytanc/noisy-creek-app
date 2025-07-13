@@ -40,9 +40,13 @@ export default function EventsPage({ searchParams }: EventsPageProps) {
         </main>
         
         {/* Fun features */}
-        <PageLoadTimer />
+        {process.env.NEXT_PUBLIC_DEBUG_MODE === 'true' && (
+            <>
+              <PageLoadTimer />
+              <ErrorTestComponent />
+            </>
+        )}
         <WalkingBeaver />
-        <ErrorTestComponent />
       </div>
     </ErrorBoundary>
   );

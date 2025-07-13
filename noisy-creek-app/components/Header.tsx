@@ -3,24 +3,24 @@ import Image from 'next/image';
 export default function Header() {
   return (
     <header className="bg-green-800/90 border-b-4 border-green-600 sticky top-0 z-50 backdrop-blur-sm">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-3 sm:py-4">
         <div className="flex items-center justify-between">
           {/* Logo Section */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <div className="relative">
               <Image
                 src="/pnwevents.png"
                 alt="Pacific Northwest Events Logo"
                 width={100}
                 height={100}
-                className="rounded-lg"
+                className="rounded-lg w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20"
               />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-yellow-300 pixel-text">
+              <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-yellow-300 pixel-text">
                 LOCAL EVENTS
               </h1>
-              <p className="text-white text-sm">Pacific Northwest Calendar</p>
+              <p className="text-white text-xs sm:text-sm hidden sm:block">Pacific Northwest Calendar</p>
             </div>
           </div>
           

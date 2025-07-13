@@ -101,7 +101,7 @@ export default function FilterBar({ currentParams }: FilterBarProps) {
             <select
               value={formData.category}
               onChange={(e) => updateFormData('category', e.target.value)}
-              className="w-full bg-green-700 text-white rounded px-3 py-2 border-2 border-green-600 focus:border-yellow-300 focus:outline-none"
+              className="w-full bg-green-700 text-white rounded px-3 py-3 border-2 border-green-600 focus:border-yellow-300 focus:outline-none min-h-[44px]"
             >
               <option value="">All Categories</option>
               <option value="music">Music</option>
@@ -122,7 +122,7 @@ export default function FilterBar({ currentParams }: FilterBarProps) {
               type="date"
               value={formData.start_date}
               onChange={(e) => updateFormData('start_date', e.target.value)}
-              className="w-full bg-green-700 text-white rounded px-3 py-2 border-2 border-green-600 focus:border-yellow-300 focus:outline-none"
+              className="w-full bg-green-700 text-white rounded px-3 py-3 border-2 border-green-600 focus:border-yellow-300 focus:outline-none min-h-[44px]"
             />
           </div>
           
@@ -135,7 +135,7 @@ export default function FilterBar({ currentParams }: FilterBarProps) {
               type="date"
               value={formData.end_date}
               onChange={(e) => updateFormData('end_date', e.target.value)}
-              className="w-full bg-green-700 text-white rounded px-3 py-2 border-2 border-green-600 focus:border-yellow-300 focus:outline-none"
+              className="w-full bg-green-700 text-white rounded px-3 py-3 border-2 border-green-600 focus:border-yellow-300 focus:outline-none min-h-[44px]"
             />
           </div>
           

@@ -55,9 +55,43 @@ export default function Pagination({
   const pageRange = getPageRange();
 
   return (
-    <div className="flex justify-center items-center gap-4 mt-8">
-      <div className="bg-green-800/80 rounded-lg p-4 border-4 border-green-600">
-        <div className="flex items-center gap-2">
+    <div className="flex justify-center items-center gap-2 sm:gap-4 mt-6 sm:mt-8">
+      <div className="bg-green-800/80 rounded-lg p-2 sm:p-4 border-4 border-green-600 w-full max-w-lg">
+        {/* Mobile: Simple prev/next with page info */}
+        <div className="flex sm:hidden items-center justify-between">
+          <button
+            onClick={() => updatePage(currentPage - 1)}
+            disabled={!hasPrevious}
+            className={`flex items-center gap-1 px-3 py-3 rounded font-semibold transition-colors min-h-[44px] ${
+              hasPrevious
+                ? 'bg-yellow-300 text-green-800 hover:bg-yellow-400'
+                : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+            }`}
+          >
+            <ChevronLeft className="w-5 h-5" />
+            <span className="text-sm">Prev</span>
+          </button>
+          
+          <span className="text-white font-semibold px-2 text-sm">
+            {currentPage} / {totalPages}
+          </span>
+          
+          <button
+            onClick={() => updatePage(currentPage + 1)}
+            disabled={!hasNext}
+            className={`flex items-center gap-1 px-3 py-3 rounded font-semibold transition-colors min-h-[44px] ${
+              hasNext
+                ? 'bg-yellow-300 text-green-800 hover:bg-yellow-400'
+                : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+            }`}
+          >
+            <span className="text-sm">Next</span>
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Desktop: Full pagination */}
+        <div className="hidden sm:flex items-center gap-2">
           {/* Previous Button */}
           <button
             onClick={() => updatePage(currentPage - 1)}
@@ -135,9 +169,16 @@ export default function Pagination({
           </button>
         </div>
         
-        {/* Results info */}
-        <div className="text-center text-white text-sm mt-2">
-          Showing {(currentPage - 1) * pageSize + 1} to {Math.min(currentPage * pageSize, totalResults)} of {totalResults} events
+        {/* Results info - responsive */}
+        <div className="text-center text-white text-xs sm:text-sm mt-2">
+          {/* Mobile: Shorter text */}
+          <span className="sm:hidden">
+            {totalResults} events total
+          </span>
+          {/* Desktop: Full text */}
+          <span className="hidden sm:inline">
+            Showing {(currentPage - 1) * pageSize + 1} to {Math.min(currentPage * pageSize, totalResults)} of {totalResults} events
+          </span>
         </div>
       </div>
     </div>
