@@ -7,7 +7,7 @@ A full-stack event management application showcasing events in the Pacific North
 - **Frontend**: Next.js 15 with React 19, TypeScript, and Tailwind CSS
 - **Backend**: Django 5.2.4 with Django REST Framework 3.16.0
 - **Database**: SQLite (development)
-- **Security**: Input validation, HTML sanitization with nh3, XSS protection
+- **Security**: Input validation, Django QuerySet HTML sanitization, XSS protection
 - **Styling**: Tailwind CSS with custom Pacific Northwest theme
 - **Testing**: Jest + React Testing Library (frontend), Django Test Framework (backend)
 
