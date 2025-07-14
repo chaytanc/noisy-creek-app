@@ -1,10 +1,6 @@
-from django.shortcuts import render
 from django.utils import timezone
-from django.core.exceptions import ValidationError
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.response import Response
-from rest_framework import status
 from dateutil import parser
 import nh3
 from .models import Event
