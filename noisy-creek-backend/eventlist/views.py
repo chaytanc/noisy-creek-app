@@ -1,7 +1,12 @@
 from django.shortcuts import render
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
+from rest_framework import status
+from dateutil import parser
+import nh3
 from .models import Event
 from .serializers import EventSerializer
 
@@ -17,24 +22,40 @@ class EventListAPIView(generics.ListAPIView):
     def get_queryset(self):
         queryset = Event.objects.select_related('category', 'venue').order_by("-start_date")
         
-        # Filter by category
-        category = self.request.query_params.get('category')
-        if category:
-            queryset = queryset.filter(category__name__iexact=category)
-        
-        # Filter by date range
-        start_date = self.request.query_params.get('start_date')
-        end_date = self.request.query_params.get('end_date')
-        
-        if start_date:
-            queryset = queryset.filter(start_date__gte=start_date)
-        if end_date:
-            queryset = queryset.filter(start_date__lte=end_date)
-        
-        # Filter for upcoming events only
-        upcoming = self.request.query_params.get('upcoming')
-        if upcoming and upcoming.lower() == 'true':
-            queryset = queryset.filter(start_date__gte=timezone.now())
+        try:
+            # Filter by category (sanitize input)
+            category = self.request.query_params.get('category')
+            if category:
+                category = nh3.clean(category.strip(), tags=set())
+                if category:
+                    queryset = queryset.filter(category__name__iexact=category)
+            
+            # Filter by date range (validate dates)
+            start_date = self.request.query_params.get('start_date')
+            end_date = self.request.query_params.get('end_date')
+            
+            if start_date:
+                try:
+                    parsed_start_date = parser.parse(start_date).date()
+                    queryset = queryset.filter(start_date__gte=parsed_start_date)
+                except (ValueError, TypeError):
+                    pass  # Invalid date format, ignore filter
+            
+            if end_date:
+                try:
+                    parsed_end_date = parser.parse(end_date).date()
+                    queryset = queryset.filter(start_date__lte=parsed_end_date)
+                except (ValueError, TypeError):
+                    pass  # Invalid date format, ignore filter
+            
+            # Filter for upcoming events only
+            upcoming = self.request.query_params.get('upcoming')
+            if upcoming and upcoming.lower() == 'true':
+                queryset = queryset.filter(start_date__gte=timezone.now())
+
+        except Exception:
+            # If any error occurs during filtering, return base queryset
+            pass
 
         return queryset
 

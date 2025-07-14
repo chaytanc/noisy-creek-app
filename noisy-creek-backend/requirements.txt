@@ -1,0 +1,5 @@
+Django==5.2.4
+djangorestframework==3.16.0
+django-cors-headers==4.6.0
+nh3==0.2.18
+python-dateutil==2.9.0

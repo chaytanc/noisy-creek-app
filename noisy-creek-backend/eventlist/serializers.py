@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Event, Category, Venue
+from .models import Event, Category, Venue, EventPost
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,3 +21,9 @@ class EventSerializer(serializers.ModelSerializer):
             'id', 'title', 'description', 'start_date', 'end_date', 
             'location', 'category', 'venue'
         ]
+
+
+class EventPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventPost
+        fields = ['id', 'event', 'content', 'created_at']
