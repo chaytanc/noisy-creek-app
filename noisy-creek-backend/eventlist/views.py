@@ -2,7 +2,6 @@ from django.utils import timezone
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
 from dateutil import parser
-import nh3
 from .models import Event
 from .serializers import EventSerializer
 
@@ -22,9 +21,7 @@ class EventListAPIView(generics.ListAPIView):
             # Filter by category (sanitize input)
             category = self.request.query_params.get('category')
             if category:
-                category = nh3.clean(category.strip(), tags=set())
-                if category:
-                    queryset = queryset.filter(category__name__iexact=category)
+                queryset = queryset.filter(category__name__iexact=category)
             
             # Filter by date range (validate dates)
             start_date = self.request.query_params.get('start_date')
@@ -52,6 +49,7 @@ class EventListAPIView(generics.ListAPIView):
         except Exception:
             # If any error occurs during filtering, return base queryset
             pass
+        print(queryset)
 
         return queryset
 

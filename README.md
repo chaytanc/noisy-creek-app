@@ -36,7 +36,7 @@ A full-stack event management application showcasing events in the Pacific North
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd noisy-creek-demo
+cd noisy-creek-app
 ```
 
 ### Backend Setup
@@ -54,7 +54,11 @@ source .venv/bin/activate
 # On Windows:
 # .venv\Scripts\activate
 
+# If you run code in VSCode or other IDEs, set the virtual environment now
+
 # Install all dependencies from requirements.txt
+# Note: ensure you have a version of python >= 3.10 when creating venv 
+# or that you specify the path to python >= 3.10 when creating the venv (with  -p) if necessary
 pip install -r requirements.txt
 
 # Run database migrations
@@ -82,7 +86,7 @@ The Django API will be available at `http://localhost:8000`
 cd noisy-creek-app
 
 # Install dependencies
-npm install
+npm install --legacy-peer-deps
 
 # Create environment file (optional)
 echo "NEXT_PUBLIC_API_URL=http://localhost:8000" > .env.local

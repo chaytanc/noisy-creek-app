@@ -27,12 +27,13 @@ async function fetchEvent(id: string): Promise<Event> {
 }
 
 export default async function EventDetailPage({ params }: EventDetailPageProps) {
+  const resolvedParams = await params
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-400 to-blue-600">
       <Header />
       <main className="container mx-auto px-4 py-8">
         <Suspense fallback={<EventDetailSkeleton />}>
-          <EventDetailContent id={params.id} />
+          <EventDetailContent id={resolvedParams.id} />
         </Suspense>
       </main>
     </div>

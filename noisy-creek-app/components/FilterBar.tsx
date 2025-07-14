@@ -93,29 +93,30 @@ export default function FilterBar({ currentParams }: FilterBarProps) {
       
       <div className={`space-y-4 ${isExpanded ? 'block' : 'hidden'} md:block`}>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          {/* Category Filter */}
+          {/* Category Filter -- Currently hard-coded for simplicity but would ideally be tied to the categories table in Django by reading an API endpoint to list them */}
           <div>
-            <label className="block text-white text-sm font-semibold mb-2">
+            <label className="block text-white text-sm font-semibold mb-2" id="category-select">
               Category
             </label>
             <select
               value={formData.category}
               onChange={(e) => updateFormData('category', e.target.value)}
               className="w-full bg-green-700 text-white rounded px-3 py-3 border-2 border-green-600 focus:border-yellow-300 focus:outline-none min-h-[44px]"
+              aria-labelledby="category-select"
             >
               <option value="">All Categories</option>
-              <option value="music">Music</option>
-              <option value="food">Food & Drink</option>
-              <option value="outdoor">Outdoor</option>
-              <option value="art & culture">Art & Culture</option>
-              <option value="sports">Sports</option>
-              <option value="community">Community</option>
+              <option value="Music">Music</option>
+              <option value="Food & Drink">Food & Drink</option>
+              <option value="Outdoor">Outdoor</option>
+              <option value="Art & Culture">Art & Culture</option>
+              <option value="Sports">Sports</option>
+              <option value="Community">Community</option>
             </select>
           </div>
           
           {/* Start Date Filter */}
           <div>
-            <label className="block text-white text-sm font-semibold mb-2">
+            <label className="block text-white text-sm font-semibold mb-2" id="start-date">
               Start Date
             </label>
             <input
@@ -123,12 +124,13 @@ export default function FilterBar({ currentParams }: FilterBarProps) {
               value={formData.start_date}
               onChange={(e) => updateFormData('start_date', e.target.value)}
               className="w-full bg-green-700 text-white rounded px-3 py-3 border-2 border-green-600 focus:border-yellow-300 focus:outline-none min-h-[44px]"
+              aria-labelledby="start-date"
             />
           </div>
           
           {/* End Date Filter */}
           <div>
-            <label className="block text-white text-sm font-semibold mb-2">
+            <label className="block text-white text-sm font-semibold mb-2" id="end-date">
               End Date
             </label>
             <input
@@ -136,6 +138,7 @@ export default function FilterBar({ currentParams }: FilterBarProps) {
               value={formData.end_date}
               onChange={(e) => updateFormData('end_date', e.target.value)}
               className="w-full bg-green-700 text-white rounded px-3 py-3 border-2 border-green-600 focus:border-yellow-300 focus:outline-none min-h-[44px]"
+              aria-labelledby="end-date"
             />
           </div>
           

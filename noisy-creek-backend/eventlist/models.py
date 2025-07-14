@@ -54,12 +54,6 @@ class Event(models.Model):
                 'start_date': 'Events cannot be created more than 30 days in the past.'
             })
         
-        # Sanitize HTML in title and location (no HTML allowed)
-        if self.title:
-            self.title = nh3.clean(self.title, tags=set())
-        if self.location:
-            self.location = nh3.clean(self.location, tags=set())
-        
         # Sanitize HTML in description (allow safe HTML)
         if self.description:
             allowed_tags = {'p', 'br', 'strong', 'em', 'ul', 'ol', 'li', 'a'}
@@ -96,27 +90,6 @@ class Category(models.Model):
         help_text="Category description (max 1000 characters)"
     )
 
-    def clean(self):
-        """Custom validation for Category model"""
-        super().clean()
-        
-        # Sanitize HTML in description
-        if self.description:
-            allowed_tags = {'p', 'br', 'strong', 'em'}
-            self.description = nh3.clean(
-                self.description,
-                tags=allowed_tags
-            )
-        
-        # Ensure name doesn't contain HTML
-        if self.name:
-            self.name = nh3.clean(self.name, tags=set())
-
-    def save(self, *args, **kwargs):
-        """Override save to run full validation"""
-        self.full_clean()
-        super().save(*args, **kwargs)
-
     def __str__(self):
         return self.name
 
@@ -139,21 +112,6 @@ class Venue(models.Model):
         blank=True,
         help_text="Venue capacity (positive integer)"
     )
-
-    def clean(self):
-        """Custom validation for Venue model"""
-        super().clean()
-        
-        # Sanitize HTML in name and address
-        if self.name:
-            self.name = nh3.clean(self.name, tags=set())
-        if self.address:
-            self.address = nh3.clean(self.address, tags=set())
-
-    def save(self, *args, **kwargs):
-        """Override save to run full validation"""
-        self.full_clean()
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name

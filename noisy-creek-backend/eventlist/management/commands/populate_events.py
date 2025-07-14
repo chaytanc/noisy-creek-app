@@ -226,7 +226,7 @@ class Command(BaseCommand):
                 'description': 'Three-day music festival featuring over 50 artists across multiple stages. Food vendors, art installations, and family-friendly activities.',
                 'category': 'Music',
                 'venue': 'Gas Works Park',
-                'days_from_now': -30,
+                'days_from_now': -29,
                 'duration_hours': 12
             },
             {
@@ -234,7 +234,7 @@ class Command(BaseCommand):
                 'description': 'Celebration of fall harvest with local farmers, pumpkin carving, apple cider, and traditional Pacific Northwest foods.',
                 'category': 'Food & Drink',
                 'venue': 'Gas Works Park',
-                'days_from_now': -60,
+                'days_from_now': -28,
                 'duration_hours': 8
             }
         ]
