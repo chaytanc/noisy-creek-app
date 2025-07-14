@@ -26,7 +26,7 @@ A full-stack event management application showcasing events in the Pacific North
 
 ### Prerequisites
 
-- Python 3.8+
+- Python 3.10+
 - Node.js 18+
 - npm or yarn
 - Git
