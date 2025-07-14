@@ -139,10 +139,6 @@ python manage.py test eventlist.tests.test_api       # API security & functional
 
 # Run with verbose output
 python manage.py test --verbosity=2
-
-# Test specific security features
-python manage.py test eventlist.tests.test_models.CategoryModelTest.test_category_html_sanitization
-python manage.py test eventlist.tests.test_api.EventAPITest.test_malicious_category_input_sanitization
 ```
 
 ### Test Coverage
@@ -237,11 +233,9 @@ NEXT_PUBLIC_DEBUG_MODE=false
 ## 🔒 Security & Validation Features
 
 ### Input Validation & Sanitization
-- **HTML Sanitization**: Uses `nh3` (modern replacement for deprecated `bleach`) to sanitize user input
-- **XSS Protection**: Script tags and dangerous HTML are completely removed
+- **XSS Protection**: Potential script tags and dangerous HTML are removed by using Django Queryset
 - **Field Validation**: Comprehensive validation for all model fields with proper error handling
-- **API Input Sanitization**: Query parameters are sanitized to prevent injection attacks
-- **Safe HTML**: Allows specific safe HTML tags in description fields (`<p>`, `<strong>`, `<em>`, etc.)
+- **No Direct User Input**: Avoid direct user input to ensure minimal security risks
 
 ### Model Validation
 - **Date Validation**: Ensures end dates are after start dates, prevents events too far in the past
@@ -254,7 +248,6 @@ NEXT_PUBLIC_DEBUG_MODE=false
 Django==5.2.4
 djangorestframework==3.16.0
 django-cors-headers==4.6.0
-nh3==0.2.18              # Modern HTML sanitizer (replaces deprecated bleach)
 python-dateutil==2.9.0   # Robust date parsing for API filters
 ```
 
@@ -262,17 +255,16 @@ python-dateutil==2.9.0   # Robust date parsing for API filters
 
 ### Core Models
 - **Event**: Core event model with title, dates, location, category
-  - Includes comprehensive validation and HTML sanitization
-  - Enforces business rules (end date after start date, etc.)
+  - Includes comprehensive validation and automatic HTML sanitization
+  - Enforces validation rules (end date after start date, etc.)
 - **Category**: Event categorization (Music, Food & Drink, Outdoor, etc.)
-  - Unique constraint on names, HTML sanitization
+  - Unique constraint on names
 - **Venue**: Optional venue information with capacity
   - Positive integer validation for capacity
 
 ### Future Scalability
 - **EventPost**: *Currently unused in UI but included for future development*
   - Designed for additional event-related content/blog posts
-  - Supports rich HTML content with sanitization
   - One-to-many relationship with Events
   - Could be used for event updates, detailed descriptions, or community posts
   - Ready for implementation when content management features are needed
