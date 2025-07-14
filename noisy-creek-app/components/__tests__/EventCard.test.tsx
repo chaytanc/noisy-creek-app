@@ -67,14 +67,14 @@ describe('EventCard', () => {
     
     const { container } = render(<EventCard event={eventWithAmpersandCategory} />)
     
-    // Check the actual HTML content to catch &amp; encoding issues
+    // Check the textContent (what users see) not innerHTML
     const categoryBadge = container.querySelector('span[class*="bg-yellow-300"]')
-    const categoryHTML = categoryBadge?.innerHTML || ''
+    const categoryText = categoryBadge?.textContent || ''
     
-    // Should contain proper "&" not "&amp;" or "&amp;amp;"
-    expect(categoryHTML).toBe('Food & Drink')
-    expect(categoryHTML).not.toContain('&amp;')
-    expect(categoryHTML).not.toContain('&amp;amp;')
+    // Should contain proper "&" not "&amp;" entities in displayed text
+    expect(categoryText).toBe('Food & Drink')
+    expect(categoryText).not.toContain('&amp;')
+    expect(categoryText).not.toContain('&amp;amp;')
   })
 
   it('renders art and culture category correctly', () => {
@@ -89,14 +89,14 @@ describe('EventCard', () => {
     
     const { container } = render(<EventCard event={eventWithArtCategory} />)
     
-    // Check the actual HTML content to catch &amp; encoding issues
+    // Check the textContent (what users see) not innerHTML
     const categoryBadge = container.querySelector('span[class*="bg-yellow-300"]')
-    const categoryHTML = categoryBadge?.innerHTML || ''
+    const categoryText = categoryBadge?.textContent || ''
     
-    // Should contain proper "&" not "&amp;" or "&amp;amp;"
-    expect(categoryHTML).toBe('Art & Culture')
-    expect(categoryHTML).not.toContain('&amp;')
-    expect(categoryHTML).not.toContain('&amp;amp;')
+    // Should contain proper "&" not "&amp;" entities in displayed text
+    expect(categoryText).toBe('Art & Culture')
+    expect(categoryText).not.toContain('&amp;')
+    expect(categoryText).not.toContain('&amp;amp;')
   })
 
 })

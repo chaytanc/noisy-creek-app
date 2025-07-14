@@ -108,16 +108,16 @@ describe('FilterBar', () => {
   it('displays category options with ampersands correctly', () => {
     render(<FilterBar currentParams={{}} />)
     
-    // Get the select element and check its innerHTML for proper ampersand rendering
+    // Get the select element and check its textContent (what users see)
     const selectElement = screen.getByLabelText(/category/i)
-    const selectHTML = selectElement.innerHTML
+    const selectText = selectElement.textContent || ''
     
-    // Should contain proper "&" in the option text, not "&amp;"
-    expect(selectHTML).toContain('Food & Drink')
-    expect(selectHTML).toContain('Art & Culture')
-    // Should NOT contain double-encoded ampersands
-    expect(selectHTML).not.toContain('Food &amp; Drink')
-    expect(selectHTML).not.toContain('Art &amp; Culture')
-    expect(selectHTML).not.toContain('&amp;amp;')
+    // Should contain proper "&" in the displayed text
+    expect(selectText).toContain('Food & Drink')
+    expect(selectText).toContain('Art & Culture')
+    // Should NOT contain HTML entities in the displayed text
+    expect(selectText).not.toContain('Food &amp; Drink')
+    expect(selectText).not.toContain('Art &amp; Culture')
+    expect(selectText).not.toContain('&amp;amp;')
   })
 })
