@@ -8,7 +8,6 @@ const mockEvent: Event = {
   description: 'A great concert in the park',
   start_date: '2024-07-15T19:00:00Z',
   end_date: '2024-07-15T22:00:00Z',
-  location: 'Central Park',
   category: {
     id: 1,
     name: 'Music',
@@ -28,7 +27,6 @@ describe('EventCard', () => {
     
     expect(screen.getByText('Test Concert')).toBeInTheDocument()
     expect(screen.getByText('A great concert in the park')).toBeInTheDocument()
-    // We fall back on the event location only if the venue is unspecified
     expect(screen.getByText('Park Amphitheater')).toBeInTheDocument()
     expect(screen.getByText('Music')).toBeInTheDocument()
   })
