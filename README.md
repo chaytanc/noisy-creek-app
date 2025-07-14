@@ -36,7 +36,7 @@ A full-stack event management application showcasing events in the Pacific North
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd noisy-creek-app
+cd noisy-creek-demo
 ```
 
 ### Backend Setup
