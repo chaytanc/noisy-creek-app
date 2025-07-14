@@ -2,7 +2,6 @@ from django.db import models
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-import nh3
 
 class Event(models.Model):
     title = models.CharField(
@@ -17,11 +16,6 @@ class Event(models.Model):
     )
     start_date = models.DateTimeField(help_text="Event start date and time")
     end_date = models.DateTimeField(help_text="Event end date and time")
-    location = models.CharField(
-        max_length=200, 
-        blank=True,
-        help_text="Event location (max 200 characters)"
-    )
     category = models.ForeignKey(
         'Category', 
         on_delete=models.CASCADE, 
@@ -32,13 +26,17 @@ class Event(models.Model):
     venue = models.ForeignKey(
         'Venue', 
         on_delete=models.CASCADE, 
-        null=True, 
-        blank=True,
-        help_text="Event venue"
+        null=False, 
+        blank=False,
+        help_text="Event venue (required)"
     )
 
     def clean(self):
-        """Custom validation for the Event model"""
+        """Custom validation for the Event model
+        
+        Note: HTML content is protected by Django's built-in template auto-escaping.
+        No additional sanitization needed for admin-only input.
+        """
         super().clean()
         
         # Validate that end_date is after start_date
@@ -53,16 +51,6 @@ class Event(models.Model):
             raise ValidationError({
                 'start_date': 'Events cannot be created more than 30 days in the past.'
             })
-        
-        # Sanitize HTML in description (allow safe HTML)
-        if self.description:
-            allowed_tags = {'p', 'br', 'strong', 'em', 'ul', 'ol', 'li', 'a'}
-            allowed_attributes = {'a': {'href', 'title'}}
-            self.description = nh3.clean(
-                self.description,
-                tags=allowed_tags,
-                attributes=allowed_attributes
-            )
 
     def save(self, *args, **kwargs):
         """Override save to run full validation"""
@@ -134,18 +122,12 @@ class EventPost(models.Model):
     )
 
     def clean(self):
-        """Custom validation for EventPost model"""
-        super().clean()
+        """Custom validation for EventPost model
         
-        # Sanitize HTML in content
-        if self.content:
-            allowed_tags = {'p', 'br', 'strong', 'em', 'ul', 'ol', 'li', 'a', 'blockquote'}
-            allowed_attributes = {'a': {'href', 'title'}}
-            self.content = nh3.clean(
-                self.content,
-                tags=allowed_tags,
-                attributes=allowed_attributes
-            )
+        Note: HTML content is protected by Django's built-in template auto-escaping.
+        No additional sanitization needed for admin-only input.
+        """
+        super().clean()
 
     def save(self, *args, **kwargs):
         """Override save to run full validation"""

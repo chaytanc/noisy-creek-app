@@ -54,15 +54,13 @@ export default function EventCard({ event }: EventCardProps) {
           </span>
         </div>
         
-        {/* Location */}
-        {(event.location || event.venue) && (
-          <div className="flex items-center gap-3 text-white mb-3">
-            <MapPin className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-            <span className="text-sm sm:text-base">
-              {event.venue ? event.venue.name : event.location}
-            </span>
-          </div>
-        )}
+        {/* Venue */}
+        <div className="flex items-center gap-3 text-white mb-3">
+          <MapPin className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+          <span className="text-sm sm:text-base">
+            {event.venue.name}
+          </span>
+        </div>
         
         {/* Description Preview */}
         {event.description && (

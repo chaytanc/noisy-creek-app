@@ -94,24 +94,18 @@ export default function EventDetail({ event }: EventDetailProps) {
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-yellow-300 mt-1" />
                 <div className="text-white">
-                  {event.venue ? (
-                    <div>
-                      <div className="font-semibold text-lg">{event.venue.name}</div>
-                      {event.venue.address && (
-                        <div className="text-sm opacity-90">{event.venue.address}</div>
-                      )}
-                      {event.venue.capacity && (
-                        <div className="flex items-center gap-2 mt-2 text-sm">
-                          <Users className="w-4 h-4" />
-                          <span>Capacity: {event.venue.capacity}</span>
-                        </div>
-                      )}
-                    </div>
-                  ) : event.location ? (
-                    <div className="font-semibold">{event.location}</div>
-                  ) : (
-                    <div className="text-gray-300">Location TBD</div>
-                  )}
+                  <div>
+                    <div className="font-semibold text-lg">{event.venue.name}</div>
+                    {event.venue.address && (
+                      <div className="text-sm opacity-90">{event.venue.address}</div>
+                    )}
+                    {event.venue.capacity && (
+                      <div className="flex items-center gap-2 mt-2 text-sm">
+                        <Users className="w-4 h-4" />
+                        <span>Capacity: {event.venue.capacity}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

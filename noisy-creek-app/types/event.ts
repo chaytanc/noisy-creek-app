@@ -17,9 +17,8 @@ export interface Event {
   description: string;
   start_date: string;
   end_date: string;
-  location: string;
   category: Category | null;
-  venue: Venue | null;
+  venue: Venue;
 }
 
 export interface EventPost {
