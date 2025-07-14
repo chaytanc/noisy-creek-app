@@ -16,10 +16,12 @@ interface SearchParams {
 }
 
 interface EventsPageProps {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 }
 
-export default function EventsPage({ searchParams }: EventsPageProps) {
+export default async function EventsPage({ searchParams }: EventsPageProps) {
+  const resolvedSearchParams = await searchParams;
+
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-gradient-to-b from-sky-400 to-blue-600">
@@ -35,11 +37,10 @@ export default function EventsPage({ searchParams }: EventsPageProps) {
           </div>
           
           <Suspense fallback={<EventListSkeleton />}>
-            <EventList searchParams={searchParams} />
+            <EventList searchParams={resolvedSearchParams} />
           </Suspense>
         </main>
         
-        {/* Fun features */}
         {process.env.NEXT_PUBLIC_DEBUG_MODE === 'true' && (
             <>
               <PageLoadTimer />

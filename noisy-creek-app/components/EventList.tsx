@@ -44,6 +44,7 @@ async function fetchEvents(searchParams: SearchParams): Promise<EventResponse> {
 }
 
 export default async function EventList({ searchParams }: EventListProps) {
+  // searchParams is now already resolved at the page level
   const eventData = await fetchEvents(searchParams);
   
   return (
