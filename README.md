@@ -112,6 +112,8 @@ cd noisy-creek-app
 
 # Run all tests
 npm test
+# Note: If there are errors running this, try:
+npm install --save-dev jest --legacy-peer-deps
 
 # Run tests in watch mode
 npm run test:watch

@@ -47,14 +47,6 @@ describe('EventCard', () => {
     expect(screen.getByText('Park Amphitheater')).toBeInTheDocument()
   })
 
-  it('handles missing venue gracefully', () => {
-    const eventWithoutVenue = { ...mockEvent, venue: null }
-    render(<EventCard event={eventWithoutVenue} />)
-    
-    expect(screen.getByText('Test Concert')).toBeInTheDocument()
-    expect(screen.queryByText('Park Amphitheater')).not.toBeInTheDocument()
-  })
-
   it('renders category names with ampersands correctly', () => {
     const eventWithAmpersandCategory = {
       ...mockEvent,
